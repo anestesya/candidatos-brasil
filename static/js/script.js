@@ -7,7 +7,7 @@ $(document).on("pageinit", "#index", function(event) {
     render.push(
       "<li>",
       "<a href='#'>",
-      "<img src='/static/img/bandeiras_estados/", estado["sigla"],".png'>",
+      "<img src='/static/img/bandeiras_estados/", estado["sigla"].toLowerCase(),".png'>",
       "<h2>", estado["nome"], "</h2>",
       "</a>",
       "</li>"
@@ -18,12 +18,12 @@ $(document).on("pageinit", "#index", function(event) {
   listview.html(render.join(''));
   listview.listview('refresh');
 
-  // verifica no webstorage se tiver estado salvo vai para tela de cargos
-  if (!store.enabled) {
-    alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
-    return;
-  }
-  var user = store.get('user');
+  // // verifica no webstorage se tiver estado salvo vai para tela de cargos
+  // if (!store.enabled) {
+  //   alert('Local storage is not supported by your browser. Please disable "Private Mode", or upgrade to a modern browser.')
+  //   return;
+  // }
+  // var user = store.get('user');
 
 });
 
