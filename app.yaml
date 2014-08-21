@@ -67,9 +67,8 @@ handlers:
   static_files: static/\1
   upload: static/robots\.txt
 
-- url: /(img|css|js)/(.*)
-  static_files: static/\1/\2
-  upload: static/(img|css|js)/(.*)
+- url: /static
+  static_dir: static
 
 # dynamic handlers
 - url: /.*
