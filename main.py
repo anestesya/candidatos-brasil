@@ -6,6 +6,12 @@ from webapp2 import WSGIApplication
 
 import os
 import sys
+from app.load_csvs import LoadCSVs
+
+csvs = LoadCSVs()
+INIDONEOS = csvs.inidoneos
+INABILITADOS = csvs.inabilitados
+
 # Third party libraries path must be fixed before importing webapp2
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'lib'))
 
