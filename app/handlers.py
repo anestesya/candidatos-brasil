@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 import logging
-import secrets
+import json
+
+from lib.simpleauth import SimpleAuthHandler
 
 import webapp2
 from webapp2_extras import auth, sessions, jinja2
 from jinja2.runtime import TemplateNotFound
 
-from lib.simpleauth import SimpleAuthHandler
+import secrets
+from main import INIDONEOS, INABILITADOS
+
 
 
 class BaseRequestHandler(webapp2.RequestHandler):
@@ -190,3 +194,32 @@ class AuthHandler(BaseRequestHandler, SimpleAuthHandler):
       user_attrs.setdefault(*attr)
 
     return user_attrs
+
+
+class BaseValidityCheckHandler(BaseRequestHandler):
+    d = None
+    key_name = ''
+
+    def get(self, *args, **kwargs):
+        cpf_cnpj = self.request.GET.get('cpf_cnpj')
+        self.response.headers['Content-type'] = 'application/json'
+        data = {'clean': True}
+        if cpf_cnpj:
+            l = []
+            for item in cpf_cnpj.split(','):
+                if item in self.d:
+                    l.append(self.d[item])
+            if len(l) > 0:
+                data['clean'] = False
+                data[self.key_name] = l
+        return self.response.out.write(json.dumps(data))
+
+
+class InidoneosHandler(BaseValidityCheckHandler):
+    d = INIDONEOS
+    key_name = 'inidoneos'
+
+
+class InabilitadosHandler(BaseValidityCheckHandler):
+    d = INABILITADOS
+    key_name = 'inabilitados'

@@ -27,5 +27,5 @@ class LoadCSVs(object):
     def _parse_file(f):
         d = {}
         for line in UnicodeDictReader(f):
-            d[line['cpf_cnpj']] = line
+            d[line['cpf_cnpj']] = d.get(line['cpf_cnpj'], []) + [line]
         return d
